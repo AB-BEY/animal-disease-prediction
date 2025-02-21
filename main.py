@@ -5,11 +5,9 @@ from routes import auth, detect
 app = FastAPI()
 
 
-# Include the auth route with the prefix '/auth'
 app.include_router(auth.router, prefix="/auth", tags=["Authentication"])
-
-# Include the detect route with the prefix '/detect'
 app.include_router(detect.router, prefix="/detect", tags=["Detection"])
+
 
 # Create tables on startup
 @app.on_event("startup")

@@ -6,6 +6,8 @@ from pydantic_settings import BaseSettings
 load_dotenv()
 
 class Settings(BaseSettings):
+    FIREBASE_STORAGE_BUCKET: str = os.getenv("FIREBASE_BUCKET", "your-project.appspot.com")
+
     DB_HOST: str = os.getenv("DB_HOST", "localhost")  # Default value if not found
     DB_USER: str = os.getenv("DB_USER", "root")       # Default value if not found
     DB_PORT: int = int(os.getenv("DB_PORT", 3306))    # Convert to int
