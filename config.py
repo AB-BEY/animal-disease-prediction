@@ -1,12 +1,13 @@
 from dotenv import load_dotenv
 import os
 from pydantic_settings import BaseSettings
+from urllib.parse import quote_plus
 
 # Load environment variables from .env file
 load_dotenv()
 
 class Settings(BaseSettings):
-    
+
     DB_HOST: str = os.getenv("DB_HOST", "localhost")  # Default value if not found
     DB_USER: str = os.getenv("DB_USER", "root")       # Default value if not found
     DB_PORT: int = int(os.getenv("DB_PORT", 3306))    # Convert to int
@@ -16,6 +17,7 @@ class Settings(BaseSettings):
     # Construct the DATABASE_URL
     DATABASE_URL: str = (
         f"mysql+mysqlconnector://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+        f"?charset=utf8mb4&ssl_ca=/etc/ssl/cert.pem"
     )
 
 # Create an instance of Settings
