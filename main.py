@@ -16,7 +16,9 @@ app.add_middleware(
 app.include_router(auth.router, prefix="/auth", tags=["Authentication"])
 app.include_router(detect.router, prefix="/detect", tags=["Detection"])
 
-
+@app.get("/")
+def read_root():
+    return {"message": "Welcome to the Animal Disease Prediction System!"}
 # Create tables on startup
 @app.on_event("startup")
 def on_startup():
