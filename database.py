@@ -1,15 +1,9 @@
 from sqlmodel import create_engine, SQLModel, Session
 from config import settings
 
-engine = create_engine(
-    settings.DATABASE_URL,
-    pool_pre_ping=True,
-    pool_recycle=300,
-    connect_args={
-        "connect_timeout": 10,
-        "ssl_disabled": False  # Set True if not using SSL
-    }
-)
+# Create the database engine
+DATABASE_URL = settings.DATABASE_URL
+engine = create_engine(DATABASE_URL)
 
 # Function to get a database session
 def get_db():
