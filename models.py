@@ -55,10 +55,3 @@ class Treatment(SQLModel, table=True):
 
     # Relationship
     diagnosis: Optional[Diagnosis] = Relationship(back_populates="treatments")
-
-class PasswordResetToken(SQLModel, table=True):
-    id: Optional[int] = Field(default=None, primary_key=True)
-    email: str = Field(index=True)
-    token: str = Field(index=True, unique=True)
-    expires_at: datetime
-    used: bool = Field(default=False)

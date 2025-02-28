@@ -70,28 +70,3 @@ async def get_current_user(token: str = Depends(oauth2_scheme), db: Session = De
         raise credentials_exception
 
     return user
-
-
-#@router.patch("/forget-password")
-#async def forget_password(email:str,db: Session = Depends(get_db)):
-#    user = db.exec(select(User).where(User.email == email)).first()
-#    if not user:
-#        raise HTTPException(status_code=400, detail="User does not exist")
-
-#    reset_token = secrets.token_urlsafe(32)
-#    expires = datetime.utcnow() + timedelta(
-#        minutes=settings.RESET_TOKEN_EXPIRE_MINUTES
-#    )
-
-#    db_token = PasswordResetToken(
-#        email=email,
-#        token=reset_token,
-#        expires_at=expires
-#    )
-#    db.add(db_token)
-#    db.commit()
-
-#    reset_link = f"{settings.FRONTEND_URL}/reset-password?token={reset_token}"
-#    await send_password_reset_email(email, reset_link)
-
-#    return {"message": "Password reset email sent"}

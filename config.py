@@ -7,16 +7,6 @@ from urllib.parse import quote_plus
 load_dotenv()
 
 class Settings(BaseSettings):
-    SMTP_HOST: str
-    SMTP_PORT: int
-    SMTP_USER: str
-    SMTP_PASSWORD: str
-    EMAIL_FROM: str
-
-    # Reset token
-    RESET_TOKEN_EXPIRE_MINUTES: int = 30
-    RESET_TOKEN_SECRET: str
-
     DB_HOST: str = os.getenv("DB_HOST")  # Default value if not found
     DB_USER: str = os.getenv("DB_USER")      # Default value if not found
     DB_PORT: int = int(os.getenv("DB_PORT", 3306))    # Convert to int
