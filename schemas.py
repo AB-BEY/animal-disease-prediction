@@ -21,6 +21,8 @@ class UserResponse(BaseModel):
 class TokenResponse(BaseModel):
     access_token: str
     token_type: str
+    name: str
+    email: EmailStr
 
 class UserInDB(UserCreate):
     hashed_password: str
