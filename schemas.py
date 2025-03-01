@@ -28,14 +28,14 @@ class UserInDB(UserCreate):
     hashed_password: str
 
 class AnimalCreate(BaseModel):
-    name: str
+    animal_name: str
     age: str
     species: str
     breed: str
 
 class AnimalResponse(BaseModel):
     id: int
-    name: str
+    animal_name: str
     age: str
     species: str
     breed: str
