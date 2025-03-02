@@ -6,7 +6,8 @@ from fastapi.middleware.cors import CORSMiddleware
 app = FastAPI()
 
 origins = [
-    "https://vet-vista-am5q.onrender.com"
+    "https://vet-vista-am5q.onrender.com",
+    "https://vet-vista.onrender.com"
 ]
 
 app.add_middleware(
