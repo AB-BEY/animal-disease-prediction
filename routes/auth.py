@@ -51,12 +51,19 @@ async def login(user: UserLogin, db: Session = Depends(get_db)):
     if not db_user or not verify_password(user.password, db_user.password_hash):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid credentials")
 
-
     # Generate JWT token
     access_token = create_access_token(data={"sub": db_user.email}, expires_delta=timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES))
 
+    response_data = TokenResponse(
+        access_token=access_token,
+        token_type="bearer",
+        name=db_user.name,
+        email=db_user.email
+    )
+
     # Return JSON response with CORS headers
-    response = JSONResponse(content={"access_token": access_token, "token_type": "bearer"})
+    response = JSONResponse(content=response_data.model_dump())
+
     response.headers["Access-Control-Allow-Origin"] = "https://vet-vista-am5q.onrender.com"
     response.headers["Access-Control-Allow-Methods"] = "POST"
     response.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization"
