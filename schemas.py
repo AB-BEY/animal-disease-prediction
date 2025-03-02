@@ -1,4 +1,6 @@
 from pydantic import BaseModel, EmailStr
+from datetime import date
+from decimal import Decimal
 from typing import Optional
 
 class UserCreate(BaseModel):
@@ -39,4 +41,10 @@ class AnimalResponse(BaseModel):
     age: str
     species: str
     breed: str
+
+class HistoryResponse(BaseModel):
+    animal_id: int
+    diagnosis_description: str
+    confidence_level: Decimal
+    diagnosis_date: date
 
