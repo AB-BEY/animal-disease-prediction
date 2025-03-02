@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException, status, Response
+from fastapi.responses import JSONResponse
 from sqlmodel import Session, select
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from database import get_db
@@ -54,11 +55,13 @@ async def login(user: UserLogin, db: Session = Depends(get_db)):
     # Generate JWT token
     access_token = create_access_token(data={"sub": db_user.email}, expires_delta=timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES))
 
-    # Manually add CORS headers
-    #response.headers["Access-Control-Allow-Origin"] = "*"
-    #response.headers["Access-Control-Allow-Methods"] = "POST"
-    #response.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization"
-    return {"access_token": access_token, "token_type": "bearer"}
+    # Return JSON response with CORS headers
+    response = JSONResponse(content={"access_token": access_token, "token_type": "bearer"})
+    response.headers["Access-Control-Allow-Origin"] = "https://vet-vista-am5q.onrender.com"
+    response.headers["Access-Control-Allow-Methods"] = "POST"
+    response.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization"
+
+    return response
 
 async def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
     credentials_exception = HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Could not validate credentials")
