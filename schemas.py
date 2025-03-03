@@ -48,3 +48,11 @@ class HistoryResponse(BaseModel):
     confidence_level: Decimal
     diagnosis_date: date
 
+class AllPetResponse(BaseModel):
+    animal_name: str
+    species: str
+    age: int
+    breed: str
+
+
+

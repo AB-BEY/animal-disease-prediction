@@ -34,6 +34,7 @@ app.include_router(detect.router, prefix="/detect", tags=["Detection"])
 app.include_router(add_pet.router, prefix="/addpet", tags=["Add Pet"])
 app.include_router(history_report.router, prefix="/history", tags=["History"])
 
+
 @app.get("/")
 def read_root(response: Response):
     response.headers["Access-Control-Allow-Origin"] = "*"

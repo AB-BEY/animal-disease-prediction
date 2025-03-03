@@ -1,14 +1,19 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlmodel import Session, select
 from database import get_db
-from models import Diagnosis
+from models import Diagnosis, Animal
 from schemas import HistoryResponse
 
 router = APIRouter()
 
-@router.get("/reports/{user_id}", response_model=HistoryResponse)
+@router.get("/reports/{user_id}", response_model=list[HistoryResponse])
 async def history_report(user_id: int,db: Session = Depends(get_db)):
-    history_table = db.exec(select(Diagnosis).where(Diagnosis.id==user_id)).all()
+    statement = (
+        select(Diagnosis)
+        .join(Animal)
+        .where(Animal.user_id == user_id)
+    )
+    history_table = db.exec(statement).all()
     return history_table
 
 @router.delete("/reports/delete")
