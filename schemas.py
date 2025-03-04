@@ -31,14 +31,14 @@ class UserInDB(UserCreate):
 
 class AnimalCreate(BaseModel):
     animal_name: str
-    age: str
+    age: int
     species: str
     breed: str
 
 class AnimalResponse(BaseModel):
     id: int
     animal_name: str
-    age: str
+    age: int
     species: str
     breed: str
 
