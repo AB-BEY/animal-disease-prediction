@@ -36,7 +36,6 @@ class AnimalCreate(BaseModel):
     breed: str
 
 class AnimalResponse(BaseModel):
-    id: int
     animal_name: str
     age: int
     species: str
