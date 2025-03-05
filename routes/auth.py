@@ -52,7 +52,7 @@ async def login(user: UserLogin, db: Session = Depends(get_db)):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid credentials")
 
     # Generate JWT token
-    access_token = create_access_token(data={"sub": db_user.email}, expires_delta=timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES))
+    access_token = create_access_token(data={"sub": str(db_user.id)}, expires_delta=timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES))
 
     response_data = TokenResponse(
         access_token=access_token,
@@ -70,18 +70,19 @@ async def login(user: UserLogin, db: Session = Depends(get_db)):
 
     return response
 
-async def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
-    credentials_exception = HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Could not validate credentials")
+async def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)) -> User:
+    credentials_exception = HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Could not validate credentials",
+                                          headers={"WWW-Authenticate": "Bearer"},)
 
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        email = payload.get("sub")
-        if email is None:
+        user_id = payload.get("sub")
+        if not user_id:
             raise credentials_exception
     except JWTError:
         raise credentials_exception
 
-    user = db.exec(select(User).where(User.email == email)).first()
+    user = db.exec(select(User).where(User.id == user_id)).first()
     if not user:
         raise credentials_exception
 
