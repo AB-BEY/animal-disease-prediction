@@ -57,6 +57,7 @@ async def login(user: UserLogin, db: Session = Depends(get_db)):
     response_data = TokenResponse(
         access_token=access_token,
         token_type="bearer",
+        id=db_user.id,
         name=db_user.name,
         email=db_user.email
     )
