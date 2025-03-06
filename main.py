@@ -31,7 +31,7 @@ async def preflight_request(full_path: str):
 
 app.include_router(auth.router, prefix="/auth", tags=["Authentication"])
 app.include_router(detect.router, prefix="/detect", tags=["Detection"])
-app.include_router(add_pet.router, prefix="/addpet", tags=["Add Pet"])
+app.include_router(add_pet.router, prefix="/mypets", tags=["My Pets"])
 app.include_router(history_report.router, prefix="/history", tags=["History"])
 app.include_router(diagnosis.router, prefix="/diagnosis", tags=["Diagnosis"])
 
