@@ -282,25 +282,25 @@ class AnimalSymptoms:
 
         return self.breed_result
 
-a = AnimalSymptoms("Bulldog",
-                   "Dog",
-                   "Male",
-                   ["Labored breathing", "Loss of Appetite", "Nasal discharge", "Coughing"],
-                   **{
-                       "Appetite_Loss": True,
-                       "Vomiting": False,
-                       "Diarrhea": False,
-                       "Coughing": True,
-                       "Labored_Breathing": True,
-                       "Lameness": False,
-                       "Skin_Lesions": False,
-                       "Nasal_Discharge": True,
-                       "Eye_Discharge": False
-                   }
-                   )
-
-a.priority_one()
-a.priority_two()
-a.priority_three()
-
-print(*a.prioritized_results.values(), sep="\n")
+# a = AnimalSymptoms("Bulldog",
+#                    "Dog",
+#                    "Male",
+#                    ["Labored breathing", "Loss of Appetite", "Nasal discharge", "Coughing"],
+#                    **{
+#                        "Appetite_Loss": True,
+#                        "Vomiting": False,
+#                        "Diarrhea": False,
+#                        "Coughing": True,
+#                        "Labored_Breathing": True,
+#                        "Lameness": False,
+#                        "Skin_Lesions": False,
+#                        "Nasal_Discharge": True,
+#                        "Eye_Discharge": False
+#                    }
+#                    )
+#
+# a.priority_one()
+# a.priority_two()
+# a.priority_three()
+#
+# print(*a.prioritized_results.values(), sep="\n")

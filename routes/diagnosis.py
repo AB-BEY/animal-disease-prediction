@@ -8,8 +8,8 @@ async def generate_diagnosis(request: DiagnosisRequest):
     try:
         # Create an instance of AnimalSymptoms with the provided parameters.
         diagnosis_engine = AnimalSymptoms(
+            species=request.species,
             breed=request.breed,
-            animal_type=request.animal_type,
             gender=request.gender,
             symptoms=request.symptoms,
             **request.follow_up  # Unpack follow-up responses if any.
