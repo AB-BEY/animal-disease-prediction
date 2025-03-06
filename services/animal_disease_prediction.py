@@ -3,13 +3,13 @@ import pandas as pd
 class DataSet:
     def __init__(self):
         self.file = pd.read_csv("cleaned_animal_disease_prediction.csv")
-        self.animals = {i for i in self.file.Animal_Type}
+        self.animals = {i for i in self.file.species}
         self.file_dict = self.file.to_dict()
         self.data_frame = pd.DataFrame(self.file)
 
         self.animal_breeds = {
-            i: {self.file_dict["Breed"][a] for a in self.file_dict["Animal_Type"] if
-                self.file_dict["Animal_Type"][a] == i}
+            i: {self.file_dict["Breed"][a] for a in self.file_dict["species"] if
+                self.file_dict["species"][a] == i}
             for i in self.animals
         }
 
@@ -22,14 +22,14 @@ class DataSet:
 
 
 class AnimalSymptoms:
-    def __init__(self, breed: str, animal_type: str, gender: str, symptoms: list, **kwargs):
+    def __init__(self, breed: str, species: str, gender: str, symptoms: list, **kwargs):
         self.r = DataSet()
 
         self.kwargs = kwargs
         self.breed = breed
-        self.animal_type = animal_type
+        self.species = species
         self.gender = gender
-        self.categories = [i for i in self.r.animal_categories if self.animal_type in self.r.animal_categories[i]]
+        self.categories = [i for i in self.r.animal_categories if self.species in self.r.animal_categories[i]]
         self.categories = [self.r.animal_categories[i] for i in self.categories][0]
         self.symptoms = symptoms
         self.prognosis = []
@@ -58,14 +58,14 @@ class AnimalSymptoms:
     def priority_one(self):
         confirm_breed = False
 
-        if self.breed in self.r.animal_breeds[self.animal_type]:
+        if self.breed in self.r.animal_breeds[self.species]:
             confirm_breed = True
 
         if not confirm_breed:
             return confirm_breed
 
         self.breed_result = self.r.data_frame[
-            (self.r.data_frame.Animal_Type == self.animal_type) & (self.r.data_frame.Breed == self.breed) & (
+            (self.r.data_frame.species == self.species) & (self.r.data_frame.Breed == self.breed) & (
                         self.r.data_frame.Gender == self.gender)]
         ###################################################################################################################################
         self.breed_symptoms = {
@@ -134,14 +134,14 @@ class AnimalSymptoms:
     def priority_two(self):
         confirm_breed = False
 
-        if self.breed in self.r.animal_breeds[self.animal_type]:
+        if self.breed in self.r.animal_breeds[self.species]:
             confirm_breed = True
 
         if not confirm_breed:
             return confirm_breed
 
         self.breed_result = self.r.data_frame[
-            (self.r.data_frame.Animal_Type == self.animal_type) & (self.r.data_frame.Breed == self.breed)]
+            (self.r.data_frame.species == self.species) & (self.r.data_frame.Breed == self.breed)]
         ###################################################################################################################################
         self.breed_symptoms = {
                                   "S1": self.breed_result.Symptom_1.to_list(),
@@ -210,13 +210,13 @@ class AnimalSymptoms:
     def priority_three(self):
         confirm_breed = False
 
-        if self.breed in self.r.animal_breeds[self.animal_type]:
+        if self.breed in self.r.animal_breeds[self.species]:
             confirm_breed = True
 
         if not confirm_breed:
             return confirm_breed
 
-        self.breed_result = self.r.data_frame[(self.r.data_frame.Animal_Type == self.animal_type)]
+        self.breed_result = self.r.data_frame[(self.r.data_frame.species == self.species)]
         ###################################################################################################################################
         self.breed_symptoms = {
                                   "S1": self.breed_result.Symptom_1.to_list(),
