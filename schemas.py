@@ -1,7 +1,7 @@
 from pydantic import BaseModel, EmailStr
 from datetime import date
 from decimal import Decimal
-from typing import Optional
+from typing import Optional,List, Dict
 
 class UserCreate(BaseModel):
     name: str
@@ -54,5 +54,15 @@ class AllPetResponse(BaseModel):
     age: int
     breed: str
 
+class DiagnosisRequest(BaseModel):
+    species: str
+    breed: str
+    gender: str
+    symptoms: List[str]
+    follow_up: Dict[str, bool] = {}
+
+class DiagnosisResponse(BaseModel):
+    prognosis: List[List]
+    prioritized_results: Dict[str, List]
 
 
