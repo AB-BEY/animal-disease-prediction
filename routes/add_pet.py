@@ -21,5 +21,8 @@ async def create_animal(animal: AnimalCreate, db: Session = Depends(get_db)):
 
 @router.get("/allpets/{id}", response_model=list[AllPetResponse])
 async def get_all_pets(id: int, db: Session = Depends(get_db)):
-    all_pets = db.exec(select(Animal).where(Animal.user_id == id)).scalar().all()
+    all_pets = db.exec(select(Animal).where(Animal.user_id == id)).scalars().all()
+    if not all_pets:
+        raise HTTPException(status_code=404, detail="No pets found for this user")
+
     return all_pets
