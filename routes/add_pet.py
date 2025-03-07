@@ -19,7 +19,7 @@ async def create_animal(animal: AnimalCreate, db: Session = Depends(get_db)):
     db.refresh(new_animal)
     return new_animal
 
-@router.get("/allpets", response_model=list[AllPetResponse])
-async def get_all_pets(current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
-    all_pets = db.exec(select(Animal).where(Animal.user_id == current_user.id)).all()
+@router.get("/allpets/{id}", response_model=list[AllPetResponse])
+async def get_all_pets(id: int, db: Session = Depends(get_db)):
+    all_pets = db.exec(select(Animal).where(Animal.user_id == id)).scalar().all()
     return all_pets
