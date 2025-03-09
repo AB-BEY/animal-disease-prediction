@@ -63,7 +63,10 @@ class DiagnosisRequest(BaseModel):
     follow_up: Dict[str, bool] = {}
 
 class DiagnosisResponse(BaseModel):
-    prognosis: List[List]
     prioritized_results: Dict[str, List]
 
-
+class VetStore(BaseModel):
+    name: str
+    address: str
+    latitude: float
+    longitude: float

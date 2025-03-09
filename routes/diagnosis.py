@@ -20,7 +20,7 @@ async def generate_diagnosis(request: DiagnosisRequest):
         diagnosis_engine.priority_three()
 
         return DiagnosisResponse(
-            prognosis=diagnosis_engine.prognosis,
+            #prognosis=diagnosis_engine.prognosis,
             prioritized_results= diagnosis_engine.prioritized_results
         )
     except Exception as e:
