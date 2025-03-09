@@ -13,7 +13,7 @@ async def create_animal(animal: AnimalCreate, db: Session = Depends(get_db)):
     if existing_animal:
         raise HTTPException(status_code=400, detail="Pet already registered")
 
-    new_animal = Animal(animal_name=animal.animal_name, age=animal.age, species=animal.species, breed=animal.breed)
+    new_animal = Animal(animal_name=animal.animal_name, age=animal.age, species=animal.species, breed=animal.breed, user_id=animal.user_id)
     db.add(new_animal)
     db.commit()
     db.refresh(new_animal)
@@ -23,6 +23,6 @@ async def create_animal(animal: AnimalCreate, db: Session = Depends(get_db)):
 async def get_all_pets(id: int, db: Session = Depends(get_db)):
     all_pets = db.exec(select(Animal).where(Animal.user_id == id)).all()
     if not all_pets:
-        raise HTTPException(status_code=404, detail="No pets found for this user")
+        return{"response":"This user has no pet"}
 
     return all_pets
