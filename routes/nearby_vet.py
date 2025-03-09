@@ -2,9 +2,13 @@ from fastapi import APIRouter, Query
 from typing import List
 from schemas import VetStore
 import requests
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 router = APIRouter()
-GOOGLE_MAPS_API_KEY = "AIzaSyC3vUpG2f2dvG_lCuTEi85SRAt2PZ5ta5o"
+GOOGLE_MAPS_API_KEY = os.getenv("GOOGLE_MAPS_API_KEY")
 
 @router.get("/nearbyvet", response_model=List[VetStore])
 async def get_nearest_vet_stores(lat: float = Query(...), lon: float = Query(...)):
