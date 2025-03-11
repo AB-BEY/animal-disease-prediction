@@ -60,7 +60,7 @@ class DiagnosisRequest(BaseModel):
     breed: str
     gender: str
     symptoms: List[str]
-    follow_up: Dict[str, bool] = {}
+    follow_up: Dict[str, bool] = None
 
 class DiagnosisResponse(BaseModel):
     prioritized_results: Dict[str, List]
