@@ -15,7 +15,7 @@ async def get_nearest_vet_stores(lat: float = Query(...), lon: float = Query(...
     url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json"
     params = {
         "location": f"{lat},{lon}",
-        "radius": 5000,  # Search within 5km
+        "radius": 10000,  # Search within 5km
         "type": "veterinary_care",
         "key": GOOGLE_MAPS_API_KEY
     }
