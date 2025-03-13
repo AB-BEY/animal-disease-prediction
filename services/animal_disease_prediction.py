@@ -31,7 +31,7 @@ class AnimalSymptoms:
         self.gender = gender.title()
         # self.categories = [i for i in self.r.animal_categories if self.species in self.r.animal_categories[i]]
         # self.categories = [self.r.animal_categories[i] for i in self.categories][0]
-        self.symptoms = symptoms
+        self.symptoms = [i.title() for i in symptoms]
         self.prognosis = []
 
         self.observable_symptoms = symptoms
