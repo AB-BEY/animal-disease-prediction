@@ -9,6 +9,11 @@ router = APIRouter()
 @router.post("/model", response_model=DiagnosisResponse)
 async def generate_diagnosis(request: DiagnosisRequest):
     try:
+        if not all([request.species, request.breed, request.gender]):
+            raise HTTPException(status_code=400, detail="Missing required fields")
+
+        if len(request.symptoms) < 2:
+            raise HTTPException(status_code=400, detail="At least 2 symptoms required")
         # Create an instance of AnimalSymptoms with the provided parameters.
         diagnosis_engine = AnimalSymptoms(
             species=request.species,
