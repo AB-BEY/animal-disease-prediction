@@ -1,6 +1,8 @@
 from fastapi import APIRouter, HTTPException
 from schemas import DiagnosisRequest, DiagnosisResponse
 from services.animal_disease_prediction import AnimalSymptoms
+import logging
+logging.basicConfig(level=logging.ERROR)
 
 router = APIRouter()
 @router.post("/model", response_model=DiagnosisResponse)
@@ -24,4 +26,5 @@ async def generate_diagnosis(request: DiagnosisRequest):
             prioritized_results= diagnosis_engine.prioritized_results
         )
     except Exception as e:
+        logging.error(f"Error processing request: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
