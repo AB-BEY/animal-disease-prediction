@@ -29,8 +29,8 @@ class AnimalSymptoms:
         self.breed = breed
         self.species = species
         self.gender = gender
-        self.categories = [i for i in self.r.animal_categories if self.species in self.r.animal_categories[i]]
-        self.categories = [self.r.animal_categories[i] for i in self.categories][0]
+        # self.categories = [i for i in self.r.animal_categories if self.species in self.r.animal_categories[i]]
+        # self.categories = [self.r.animal_categories[i] for i in self.categories][0]
         self.symptoms = symptoms
         self.prognosis = []
 
@@ -63,8 +63,8 @@ class AnimalSymptoms:
             return confirm_breed
 
         self.breed_result = self.r.data_frame[
-            (self.r.data_frame.species == self.species) & (self.r.data_frame.Breed == self.breed) & (
-                        self.r.data_frame.Gender == self.gender)]
+            (self.r.data_frame.species == self.species) & (self.r.data_frame.Breed == self.breed) & (self.r.data_frame.Gender == self.gender)]
+
         ###################################################################################################################################
         self.breed_symptoms = {
                                   "S1": self.breed_result.Symptom_1.to_list(),
@@ -140,6 +140,7 @@ class AnimalSymptoms:
 
         self.breed_result = self.r.data_frame[
             (self.r.data_frame.species == self.species) & (self.r.data_frame.Breed == self.breed)]
+
         ###################################################################################################################################
         self.breed_symptoms = {
                                   "S1": self.breed_result.Symptom_1.to_list(),
@@ -280,17 +281,25 @@ class AnimalSymptoms:
 
         return self.breed_result
 
-# a = AnimalSymptoms("",
-#                    "",
-#                    "",
-#                    [],
+# a = AnimalSymptoms("Bulldog",
+#                    "Dog",
+#                    "Male",
+#                    ["Nasal discharge","loss of appetite","vomiting"],
 #                    **{
-#
+#                         "Appetite_Loss": True,
+#                         "Vomiting": False,
+#                         "Diarrhea": False,
+#                         "Coughing": True,
+#                         "Labored_Breathing": True,
+#                         "Lameness": False,
+#                         "Skin_Lesions": False,
+#                         "Nasal_Discharge": True,
+#                         "Eye_Discharge": False
 #                    }
-#                    )
+# )
 #
 # a.priority_one()
 # a.priority_two()
 # a.priority_three()
-
-#print(*a.prioritized_results.values(), sep="\n")
+#
+# print(*a.prioritized_results.values(), sep="\n")
