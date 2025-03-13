@@ -26,9 +26,9 @@ class AnimalSymptoms:
         self.r = DataSet()
 
         self.kwargs = kwargs
-        self.breed = breed
-        self.species = species
-        self.gender = gender
+        self.breed = breed.title()
+        self.species = species.title()
+        self.gender = gender.title()
         # self.categories = [i for i in self.r.animal_categories if self.species in self.r.animal_categories[i]]
         # self.categories = [self.r.animal_categories[i] for i in self.categories][0]
         self.symptoms = symptoms
