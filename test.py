@@ -1,10 +1,62 @@
-from dotenv import load_dotenv
-import os
+from fastapi.testclient import TestClient
+from main import app
 
-load_dotenv()
+client = TestClient(app)
+def test_diagnosis_endpoint():
+    """Test the diagnosis model API endpoint"""
+    request_data = {
+        "species": "dog",
+        "breed": "bulldog",
+        "gender": "male",
+        "symptoms": ["coughing", "loss of appetite","Nasal discharge"],
+        "follow_up": {
+            "Appetite_Loss": True,
+            "Vomiting": False,
+            "Diarrhea": False,
+            "Coughing": True,
+            "Labored_Breathing": False,
+            "Lameness": False,
+            "Skin_Lesions": False,
+            "Nasal_Discharge": True,
+            "Eye_Discharge": False
+        }
+    }
+    response = client.post("/diagnosis/model", json=request_data)
+    assert response.status_code == 200  # Expecting a successful response
+    data = response.json()
+    assert "prioritized_results" in data
+    assert isinstance(data["prioritized_results"], dict)
 
-print("DB_HOST:", os.getenv("DB_HOST"))
-print("DB_PORT:", os.getenv("DB_PORT"))
-print("DB_PASSWORD:", os.getenv("DB_PASSWORD"))
-print("DB_NAME:", os.getenv("DB_NAME"))
-print("DB_USER:", os.getenv("DB_USER"))
+def test_invalid_species():
+    """Test with an invalid species"""
+    request_data = {
+        "species": "dragon",
+        "breed": "Nightfury",
+        "gender": "male",
+        "symptoms": ["vomiting","loss of appetite"],
+        "follow_up": {
+            "Appetite_Loss": True,
+            "Vomiting": True,
+            "Diarrhea": False,
+            "Coughing": False,
+            "Labored_Breathing": False,
+            "Lameness": False,
+            "Skin_Lesions": False,
+            "Nasal_Discharge": True,
+            "Eye_Discharge": False}
+    }
+
+    response = client.post("/diagnosis/model", json=request_data)
+    assert response.status_code == 400  # Expecting a bad request
+
+def test_missing_field():
+    """Test request with missing required fields"""
+    request_data = {
+        "breed": "persian",
+        "gender": "male",
+        "symptoms": ["vomiting","fever"]
+    }
+
+    response = client.post("/diagnosis/model", json=request_data)
+    assert response.status_code == 422  # Expecting validation error
+

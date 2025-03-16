@@ -31,6 +31,11 @@ async def generate_diagnosis(request: DiagnosisRequest):
             #prognosis=diagnosis_engine.prognosis,
             prioritized_results= diagnosis_engine.prioritized_results
         )
+    except KeyError as e:
+        logging.error(f"Invalid species provided: {str(e)}")
+        print("Invalid species provided:", str(e))
+        raise HTTPException(status_code=400, detail="Invalid species provided.")
+
     except Exception as e:
         logging.error(f"Error processing request: {str(e)}")
         print("Error processing request:",str(e))
