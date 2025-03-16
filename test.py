@@ -60,3 +60,4 @@ def test_missing_field():
     response = client.post("/diagnosis/model", json=request_data)
     assert response.status_code == 422  # Expecting validation error
 
+
