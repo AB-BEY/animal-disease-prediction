@@ -26,6 +26,7 @@ async def generate_diagnosis(request: DiagnosisRequest):
         diagnosis_engine.priority_one()
         diagnosis_engine.priority_two()
         diagnosis_engine.priority_three()
+        diagnosis_engine.assign_treatment()
 
         return DiagnosisResponse(
             #prognosis=diagnosis_engine.prognosis,

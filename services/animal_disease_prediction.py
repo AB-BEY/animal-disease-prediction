@@ -2,7 +2,7 @@ import pandas as pd
 
 class DataSet:
     def __init__(self):
-        self.file = pd.read_csv("cleaned_animal_disease_prediction.csv")
+        self.file = pd.read_excel("cleaned_animal_disease_prediction.xlsx")
         self.animals = {i for i in self.file.species}
         self.file_dict = self.file.to_dict()
         self.data_frame = pd.DataFrame(self.file)
@@ -56,6 +56,7 @@ class AnimalSymptoms:
     def priority_one(self):
         confirm_breed = False
 
+        print(self.r.animal_breeds[self.species])
         if self.breed in self.r.animal_breeds[self.species]:
             confirm_breed = True
 
@@ -281,19 +282,24 @@ class AnimalSymptoms:
 
         return self.breed_result
 
-# a = AnimalSymptoms("Bulldog",
-#                    "Dog",
+    def assign_treatment(self):
+        for key in self.prioritized_results:
+            treatment = self.r.data_frame[(self.r.data_frame.Disease_Prediction == self.prioritized_results[key][0].title())].Treatment.to_list()
+            self.prioritized_results[key].append(*treatment[:1])
+
+# a = AnimalSymptoms("English Angora",
+#                    "Rabbit",
 #                    "Male",
-#                    ["Nasal discharge","loss of appetite","vomiting"],
+#                    ["Hair loss","whitish nose","itching"],
 #                    **{
 #                         "Appetite_Loss": True,
 #                         "Vomiting": False,
 #                         "Diarrhea": False,
-#                         "Coughing": True,
-#                         "Labored_Breathing": True,
+#                         "Coughing": False,
+#                         "Labored_Breathing": False,
 #                         "Lameness": False,
-#                         "Skin_Lesions": False,
-#                         "Nasal_Discharge": True,
+#                         "Skin_Lesions": True,
+#                         "Nasal_Discharge": False,
 #                         "Eye_Discharge": False
 #                    }
 # )
@@ -301,5 +307,6 @@ class AnimalSymptoms:
 # a.priority_one()
 # a.priority_two()
 # a.priority_three()
+# a.assign_treatment()
 #
 # print(*a.prioritized_results.values(), sep="\n")
