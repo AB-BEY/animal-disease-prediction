@@ -287,6 +287,11 @@ class AnimalSymptoms:
             treatment = self.r.data_frame[(self.r.data_frame.Disease_Prediction == self.prioritized_results[key][0].title())].Treatment.to_list()
             self.prioritized_results[key].append(*treatment[:1])
 
+    def assign_description(self):
+        for key in self.prioritized_results:
+            treatment = self.r.data_frame[(self.r.data_frame.Disease_Prediction == self.prioritized_results[key][0].title())].Description.to_list()
+            self.prioritized_results[key].append(*treatment[:1])
+
 # a = AnimalSymptoms("English Angora",
 #                    "Rabbit",
 #                    "Male",
@@ -308,5 +313,6 @@ class AnimalSymptoms:
 # a.priority_two()
 # a.priority_three()
 # a.assign_treatment()
+# a.assign_description()
 #
 # print(*a.prioritized_results.values(), sep="\n")
