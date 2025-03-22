@@ -3,7 +3,7 @@ from sqlmodel import Session, select
 from database import get_db
 from models import Animal, User
 from schemas import AnimalCreate, AllPetResponse, AnimalResponse
-from routes.auth import get_current_user
+
 
 router = APIRouter()
 

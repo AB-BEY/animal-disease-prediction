@@ -65,6 +65,9 @@ class DiagnosisRequest(BaseModel):
 class DiagnosisResponse(BaseModel):
     prioritized_results: Dict[str, List]
 
+class DiagnosisDeleteRequest(BaseModel):
+    diagnosis_ids: List[int]
+
 class VetStore(BaseModel):
     name: str
     address: str
