@@ -284,26 +284,35 @@ class AnimalSymptoms:
 
     def assign_treatment(self):
         for key in self.prioritized_results:
-            treatment = self.r.data_frame[(self.r.data_frame.Disease_Prediction == self.prioritized_results[key][0].title())].Treatment.to_list()
-            self.prioritized_results[key].append(*treatment[:1])
+            try:
+                treatment = self.r.data_frame[(self.r.data_frame.Disease_Prediction == self.prioritized_results[key][0].title())].Treatment.to_list()
+                self.prioritized_results[key].append(*treatment[:1])
+
+            except AttributeError:
+                self.prioritized_results[key].append(None)
 
     def assign_description(self):
         for key in self.prioritized_results:
-            treatment = self.r.data_frame[(self.r.data_frame.Disease_Prediction == self.prioritized_results[key][0].title())].Description.to_list()
-            self.prioritized_results[key].append(*treatment[:1])
+            try:
+                treatment = self.r.data_frame[(self.r.data_frame.Disease_Prediction == self.prioritized_results[key][0].title())].Description.to_list()
+                self.prioritized_results[key].append(*treatment[:1])
 
-# a = AnimalSymptoms("English Angora",
-#                    "Rabbit",
+            except AttributeError:
+                self.prioritized_results[key].append(None)
+
+
+# a = AnimalSymptoms("Nigerian Dwarf",
+#                    "Goat",
 #                    "Male",
-#                    ["Hair loss","whitish nose","itching"],
+#                    ["penis problem","one ball"],
 #                    **{
-#                         "Appetite_Loss": True,
+#                         "Appetite_Loss": False,
 #                         "Vomiting": False,
 #                         "Diarrhea": False,
 #                         "Coughing": False,
 #                         "Labored_Breathing": False,
-#                         "Lameness": False,
-#                         "Skin_Lesions": True,
+#                         "Lameness": True,
+#                         "Skin_Lesions": False,
 #                         "Nasal_Discharge": False,
 #                         "Eye_Discharge": False
 #                    }
